@@ -1,0 +1,168 @@
+GIT COMMANDS USED IN THE ASSIGNMENT
+Name: Vanditabyaa Dwivedi
+Roll No: 20243b02655
+======================================================================
+
+STEP 1: LOCAL REPOSITORY SETUP
+----------------------------------------------------------------------
+mkdir ~/git-assignment
+    Creates a new project folder named git-assignment on the local machine.
+
+cd ~/git-assignment
+    Moves into the project folder so all later commands run inside it.
+
+ls
+    Lists the files in the folder (index.html and about.html).
+
+git init -b main
+    Initializes a new, empty Git repository in the folder and names the
+    default branch "main".
+
+git status
+    Shows the current branch and the state of files (untracked, modified,
+    staged).
+
+
+STEP 2: GIT WORKFLOW EXECUTION
+----------------------------------------------------------------------
+git add index.html about.html
+    Stages the two HTML files so they are included in the next commit.
+
+git commit -m "Initial commit: add index.html and about.html"
+    Records the initial state of the project as the first commit.
+
+git diff
+    Shows the exact line changes made to tracked files that are not yet
+    staged (used here to view the edit made to about.html).
+
+git add about.html
+    Stages the modified about.html file.
+
+git commit -m "Update about.html with student details"
+    Creates the second commit containing the change to about.html.
+
+git branch feature
+    Creates a new branch named "feature" pointing at the current commit.
+
+git branch
+    Lists all local branches; the current branch is marked with *.
+
+git checkout feature
+    Switches the working directory to the feature branch.
+    (git switch feature does the same in newer Git versions.)
+
+git add index.html
+    Stages the footer change made to index.html on the feature branch.
+
+git commit -m "Add footer to index.html (feature branch)"
+    Commits the change on the feature branch only.
+
+git checkout main
+    Switches back to the main branch.
+
+git merge --no-ff feature -m "Merge branch feature into main"
+    Merges the feature branch into main. --no-ff forces a merge commit so
+    the branch activity stays visible in the history.
+
+git log --oneline --graph --all
+    Shows a compact, graphical commit history of all branches, including
+    where the feature branch split off and was merged back.
+
+git log
+    Shows the full commit history with commit hash, author, date and message.
+
+
+STEP 3: .GITIGNORE IMPLEMENTATION
+----------------------------------------------------------------------
+cat .gitignore
+    Displays the contents of .gitignore (rules: *.log and temp/).
+
+echo "debug info" > debug.log
+    Creates a test log file to check that .log files are ignored.
+
+mkdir temp && echo "scratch" > temp/notes.txt
+    Creates a temp folder with a file inside to check the folder is ignored.
+
+git status
+    Confirms that debug.log and temp/ do not appear as untracked files.
+
+git add .gitignore
+    Stages the .gitignore file.
+
+git commit -m "Add .gitignore to ignore .log files and temp/ folder"
+    Commits the .gitignore file to the repository.
+
+git check-ignore -v debug.log temp/notes.txt
+    Shows which .gitignore rule (file and line number) ignores each path.
+
+git status --ignored
+    Lists ignored files separately, proving debug.log and temp/ are ignored.
+
+
+STEP 4: UNDO OPERATION
+----------------------------------------------------------------------
+echo "<!-- temporary test line -->" >> index.html
+    Appends a test line to index.html to create an extra change.
+
+git add index.html
+    Stages the test change.
+
+git commit -m "Add temporary test comment to index.html"
+    Makes the additional commit that will be undone.
+
+git log --oneline -3
+    Shows the last 3 commits, confirming the new commit is at the top.
+
+git revert HEAD --no-edit
+    Undoes the last commit by creating a new commit that reverses its
+    changes. History is kept, so it is safe for a shared/pushed branch.
+    --no-edit uses the default revert message.
+
+git log --oneline -4
+    Shows the original commit and the new "Revert" commit above it.
+
+tail -3 index.html
+    Shows the last 3 lines of index.html, confirming the test line is gone.
+
+(Alternative, not used: git reset --soft HEAD~1 removes the last commit
+from history but keeps its changes staged; git reset --hard HEAD~1 also
+discards the changes. reset rewrites history, so revert was chosen.)
+
+
+STEP 5: GITHUB INTEGRATION
+----------------------------------------------------------------------
+gh repo create git-assignment --public
+    Creates a new, empty public repository named git-assignment on GitHub
+    using the GitHub CLI (same as clicking "New repository" on github.com).
+
+git remote add origin https://github.com/vanditabyaa09/git-assignment.git
+    Connects the local repository to the public GitHub repository and
+    names that remote "origin".
+
+git remote -v
+    Verifies the remote URL used for fetch and push.
+
+git push -u origin main
+    Uploads the main branch with its full commit history to GitHub and sets
+    origin/main as the upstream branch.
+
+git push origin feature
+    Uploads the feature branch so the branch also appears on GitHub.
+
+git branch -a
+    Lists local and remote branches, confirming origin/main and
+    origin/feature exist.
+
+Repository URL: https://github.com/vanditabyaa09/git-assignment
+
+
+STEP 6: COMMAND DOCUMENTATION FILE
+----------------------------------------------------------------------
+git add git_commands.txt
+    Stages this documentation file.
+
+git commit -m "Add git_commands.txt with documented Git commands"
+    Commits the documentation file so it is part of the repository.
+
+git push
+    Pushes the new commit to origin/main on GitHub.
